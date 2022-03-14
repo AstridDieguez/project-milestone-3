@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Log In</title>
+        <style type="text/css">
+            .center{
+                display: block;
+                width: fit-content;
+                margin-left: auto;
+                margin-right: auto;
+                text-align: center;
+            }
+            .inline{
+                display: inline;
+            }
+            .border{
+                border-style: solid;
+                border-width: 1.5px;
+                border-color: red;
+            }
+            .button{
+                font-family: 'Open Sans', sans-serif;
+                font-weight: 500;
+                font-size: 20px;
+                color: rgb(71, 71, 71);
+                border-style: solid;
+                border-width: 1.5px;
+                border-color: lightgrey;
+                border-radius: 5px;
+                background-color: lightgrey;
+            }
+            .button:hover{
+                color: black;
+                border-color: black;
+                background-color: transparent;
+                cursor: pointer;
+            }
+            .h1{
+                font-family: 'Manrope', sans-serif;
+                font-weight: 600;
+                font-size: 40px;
+            }
+            .p1{
+                font-family: 'Manrope', sans-serif;
+                font-weight: 300;
+                font-size: 16px;
+            }
+            .textInput{
+                height: 22px;
+                font-size: 16px;
+            }
+            .parent{
+                position: relative;
+            }
+            .child{
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%)
+            }
+            #loginform{
+                width: 275px;
+                height: 30px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1 id="title" class="center h1">Log In to View Movies</h1>
+        <form method="POST" action="/login" id="loginform" class="center parent">
+            <input type="text" name="userID" placeholder="Username" class="textInput child" style="left: 0%">
+            <input type="submit" value="Log in" class="button child" style="right: 0%">
+        </form>
+        {%if exists == False%}
+            <p style="color: red" class="center p1">Could not log in with that username</p>
+        {%endif%}
+        <p class="center p1">OR</p>
+        <form method="GET" action="/signup" class="center">
+            <input type="submit" value="Sign-up" class="button">
+        </form>
+    </body>
+</html>

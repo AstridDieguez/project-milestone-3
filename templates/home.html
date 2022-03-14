@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href={{url_for('static', filename='style.css')}}/>
+    </head>
+    <title>Project Milestone #2</title>
+    <body>
+        <h1 id="welcome">Hello, <span id="username">{{user["username"]}}</span></h1>
+        <form method="POST" action="/logout">
+            <input type="submit" id="logout" value="Logout" class="button">
+        </form>
+        <form method="POST" action="/home" class="center">
+            <input type="text" name="query" placeholder="Movie Name"><br>
+            <input type="submit" value="Search TMDB" class="button">
+        </form>
+        {%if noSearch:%}
+            <p id="result" class="center alert">No results. Random movie generated</p>
+        {%endif%}
+        <h1 id="title" class="center">{{title}}</h1>
+        <h1 id="genres" class="center">{{genres}}</h1>
+        <h1 id="tagline" class="center">{{tagline}}</h1>
+        {%if not wiki_url == None%}
+            <a id="wiki" href={{wiki_url}} class="center">Wikipedia</a>
+        {%endif%}
+        <img id="poster" class="center" src={{poster_path}}>
+        <h1 class="center" style="margin-top: 30px; margin-bottom: 30px; font-family: sans-serif; font-weight: 500">Rate {{title}}</h1>
+        {%if noRating%}
+            <p id="rating" class="center alert">Please rate the movie before submitting.</p>
+        {%endif%}
+        {%if madeComment%}
+            <p class="center alert" style="margin-top: 5px; margin-bottom: 15px">You already rated this movie.</p>
+        {%endif%}
+        <form method="POST" action="/home" id="ratingForm" class="center">
+            <input type="radio" id="1star" name="rating" value="1">
+            <label for="1star">1 star</label>
+            <input type="radio" id="2star" name="rating" value="2">
+            <label for="2star">2 stars</label>
+            <input type="radio" id="3star" name="rating" value="3">
+            <label for="3star">3 stars</label>
+            <input type="radio" id= 4star" name="rating" value="4">
+            <label for="4star">4 stars</label>
+            <input type="radio" id="5star" name="rating" value="5">
+            <label for="5star">5 stars</label>
+            <textarea id="comment" name="comment" rows="5" cols="40" placeholder="Enter your comment here" style="margin-top: 20px; font-size: 18px" class="center"></textarea>
+            <br>
+            <input type="hidden" name="movieID" value={{movieID}}>
+            <input type="submit" name="comment+rating" value="Submit" class="button">
+        </form>
+        {%for comment in movieComments%}
+            <div class="comment">
+                <p class="line"><span id="username1">{{comment.user.username}}</span> - {{comment.rating}}
+                    {%if comment.rating == 1%}
+                        star
+                    {%else%}
+                        stars
+                    {%endif%}
+                </p>
+                <p class="line">{{comment.comment}}</p>
+            </div>
+        {%endfor%}
+        <br>
+    </body>
+</html>
