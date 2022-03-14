@@ -1,6 +1,6 @@
 // import logo from './logo.svg';
 import './style.css'; 
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useRef} from 'react';
 
 function App() {
   const state_default = {
@@ -17,31 +17,15 @@ function App() {
     movieComments : []
   }
   const [data, setData] = useState(state_default);
-  const [userComment, setUserComment] = useState(null);
-  const [deletedUserComment, setDeletedUserComment] = useState(false);
   const [movieCommentsList, setMovieCommentsList] = useState(null);
   const [userCommentDiv, setUserCommentDiv] = useState(null);
-  /*
-  useEffect(() => {
-    fetch("/data")
-    .then((res) => res.json())
-    .then((dt) => setData(dt))
-  }, []);
-  */
-  /*
-  function search(event){
-    event.preventDefault();
-    setData(state_default);
-    let formData = new FormData();
-    formData.append(document.getElementById("query").name, document.getElementById("query").value)
-    fetch("/data", {method: "POST", body: formData})
-    .then((res) => res.json())
-    .then((dt) => setData(dt))
-  }
-  */
+  const userComment = useRef(null)
+  const deletedUserComment = useRef(false);
+  const editedUserComment = useRef(false);
+
   function getUserComment(comments, userID){
     for (let i in comments){
-      if (comments[i]["userID"] == userID){
+      if (comments[i]["userID"] === userID){
         return comments.splice(i, 1)[0];
       }
     }
@@ -53,14 +37,15 @@ function App() {
     const args = (document.getElementById("data") == null) ? (state_default) : JSON.parse(document.getElementById("data").text);
     const us = getUserComment(args["movieComments"], args["user"]["id"]);
     setData(args);
-    setUserComment(us);
+    userComment.current = us;
 
     setMovieCommentsList(args["movieComments"].map(movieCommentsHTML));
-    setUserCommentDiv(userCommentHTML(us));
+    setUserCommentDiv(userCommentHTML());
   }, []);
 
   console.log(data);
   console.log(userComment);
+  console.log(deletedUserComment);
 
   const rateTitle = {
     marginTop: "30px",
@@ -79,17 +64,44 @@ function App() {
     fontSize: "18px"
   };
 
-  function saveComment(){
+  function saveComment(){   
+    /* event.preventDefault(); */ 
+    let comment = userComment.current;
+    let formData = new FormData();
+    formData.append("comment_json", JSON.stringify(comment));
+    formData.append("to_delete", deletedUserComment.current);
+    formData.append("edited", editedUserComment.current);
 
+    fetch("/comment", {method: "POST", body: formData})
+    .then((response) => response.json())
+    .then((dt) => {
+      if (dt["success"] === true){
+        console.log(dt["success"]);
+        commitDelete();
+      } else {
+
+      }
+    });
   }
-
+  function commitDelete(){
+    setUserCommentDiv(() => {
+      return (
+        <div class="deleted-message">
+          <p class="line">Your changes have been saved.</p>
+        </div>
+      )
+    });
+  }
   function handleEdit(){
 
   }
 
-  function 
+  function undoDelete(){
+    deletedUserComment.current = false;
+    setUserCommentDiv(userCommentHTML());
+  }
 
-  function handleDelete(comment){
+  function handleDelete(){
     function set(comment) {
       if (comment == null) {
         return (<div></div>);
@@ -107,7 +119,7 @@ function App() {
               })()}
               <span style={{float: "right"}} class="">
                 <button id="edit-comment" type="button" class="button" style={{marginRight: "4px", borderColor: "purple", backgroundColor: "purple"}} onClick={() => saveComment()}>Save</button>
-                <button id="delete-comment" type="button" class="button" style={{marginLeft: "4px"}} onClick={() => userCommentHTML(comment)}>Undo</button>
+                <button id="delete-comment" type="button" class="button" style={{marginLeft: "4px"}} onClick={() => undoDelete()}>Undo</button>
               </span>
             </p>
             <p class="line deleted-comment">{comment.comment}</p>
@@ -115,12 +127,13 @@ function App() {
         )
       }
     }
-    setDeletedUserComment(true);
-    setUserCommentDiv(set(comment));
+    deletedUserComment.current = true;
+    setUserCommentDiv(set(userComment.current));
   }
 
   /* create a div for the current user's comment, has options to edit or delete */
-  function userCommentHTML(comment){
+  function userCommentHTML(){
+    let comment = userComment.current;
     if (comment == null) {
       return (<div></div>);
     }
@@ -137,7 +150,7 @@ function App() {
             })()}
             <span style={{float: "right"}} class="">
               <button id="edit-comment" type="button" class="button" style={{marginRight: "4px"}} onClick={() => handleEdit()}>Edit</button>
-              <button id="delete-comment" type="button" class="button" style={{marginLeft: "4px"}} onClick={() => handleDelete(comment)}>Delete</button>
+              <button id="delete-comment" type="button" class="button" style={{marginLeft: "4px"}} onClick={() => handleDelete()}>Delete</button>
             </span>
           </p>
           <p class="line">{comment.comment}</p>

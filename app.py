@@ -41,6 +41,19 @@ bp = Blueprint(
     __name__,
     template_folder="./static/react",
 )
+@bp.route("/comment", methods=["POST", "GET"])
+def comment():
+    if(request.method == "POST"):
+        comment_json = json.loads(request.form.get("comment_json"))
+        to_delete = request.form.get("to_delete")
+        edited = request.form.get("edited")
+        if to_delete:
+            print("comment count: " + str(len(Comments.getAllComments())))
+            result = Comments.deleteComment(comment_json["id"])
+            print("comment count: " + str(len(Comments.getAllComments())))
+        elif edited:
+            print("call edit func")
+        return jsonify(success=result)
 
 @bp.route("/react", methods=["POST", "GET"])
 def react():
@@ -51,17 +64,14 @@ def react():
     movieID = None
     if(request.method == "POST"):
         if "comment+rating" in request.form:
-            print("test 1")
             userID = user.get_id()
             movieID = request.form.get("movieID")
             comment = Comments.getComment(userID, movieID)
             if not comment:
-                print("test 2")
                 ratings = ["1", "2", "3", "4", "5"]
                 comment = request.form.get("comment")
                 rating = request.form.get("rating")
                 if(rating not in ratings):
-                    print("test 3")
                     noRating = True
                 else:
                     Comments.addComment(userID, movieID, comment, rating)

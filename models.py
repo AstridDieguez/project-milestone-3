@@ -87,6 +87,15 @@ class Comments(db.Model):
         db.session.commit()
 
     @classmethod
+    def deleteComment(cls, id):
+        comment = cls.query.filter_by(id=id).first()
+        if comment:
+            db.session.delete(comment)
+            db.session.commit()
+            return True
+        return False  
+
+    @classmethod
     def getMovieComments(cls, movieID):
         comments = cls.query.filter_by(movieID=movieID).all()
         return comments
