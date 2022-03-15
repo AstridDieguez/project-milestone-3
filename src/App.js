@@ -45,7 +45,6 @@ function App() {
 
   console.log(data);
   console.log(userComment);
-  console.log(deletedUserComment);
 
   const rateTitle = {
     marginTop: "30px",
@@ -77,6 +76,7 @@ function App() {
     .then((dt) => {
       if (dt["success"] === true){
         console.log(dt["success"]);
+        userComment.current = null;
         commitDelete();
       } else {
 
@@ -93,7 +93,34 @@ function App() {
     });
   }
   function handleEdit(){
+    function set(comment) {
+      if (comment == null) {
+        return (<div></div>);
+      }
+      else {
+        return (
+          <div class="comment">
+            <p class="line" style={{marginBottom: "16px"}}>
+              <span style={{}}>Edit Mode</span>
+              <span style={{float: "right"}} class="">
+                <button id="save-comment" type="button" class="button" style={{marginRight: "4px"}} onClick={() => saveComment()}>Save</button>
+                <button id="edit-comment" type="button" class="button" style={{marginLeft: "4px"}} onClick={() => undoEdit()}>Cancel</button>
+              </span>
+            </p>
+            <form>
+              <textarea class="line" id="edit-comment-textarea" rows= "20" cols="100" name="comment">{comment.comment}</textarea>
+            </form>
+          </div>
+        )
+      }
+    }
+    editedUserComment.current = true;
+    setUserCommentDiv(set(userComment.current));
+  }
 
+  function undoEdit(){
+    editedUserComment.current = false;
+    setUserCommentDiv(userCommentHTML());
   }
 
   function undoDelete(){

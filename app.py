@@ -47,12 +47,13 @@ def comment():
         comment_json = json.loads(request.form.get("comment_json"))
         to_delete = request.form.get("to_delete")
         edited = request.form.get("edited")
-        if to_delete:
+        if (to_delete == "true"):
             print("comment count: " + str(len(Comments.getAllComments())))
             result = Comments.deleteComment(comment_json["id"])
             print("comment count: " + str(len(Comments.getAllComments())))
-        elif edited:
+        elif (edited == "true"):
             print("call edit func")
+            result = False
         return jsonify(success=result)
         
 
