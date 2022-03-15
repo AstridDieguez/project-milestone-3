@@ -79,7 +79,7 @@ function App() {
         userComment.current = null;
         commitDelete();
       } else {
-
+        console.log("error");
       }
     });
   }

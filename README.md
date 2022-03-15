@@ -1,70 +1,61 @@
-# Getting Started with Create React App
+[View in Heroku](https://adieguez1-project-m2.herokuapp.com/)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Technologies, Frameworks, Libraries and APIs Used
+* Visual Studio Code (VSCode)
+* Git + Github
+* Python
+* Pylint
+* Python Flask
+* Flask Login
+* SQLAlchemy
+* HTML/CSS
+* Heroku
+* TMDB API
+* Wikipedia API
 
-## Available Scripts
+## How to Launch App Locally
+1. Make sure you have git installed on your computer:
 
-In the project directory, you can run:
+   **Linux**  
+   `sudo apt-get update`  
+   `sudo apt-get install git`
 
-### `npm start`
+   Verify installation by checking the version:  
+   `git --version`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+2. Make sure you have python installed on your computer:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+   **Linux**  
+   `sudo apt-get install python3.8`
 
-### `npm test`
+   Verify installiation by checking the version:  
+   `python3 --version`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+3. Clone this repository with `git clone git@github.com:csc4350-sp22/milestone2-adieguez1.git`
 
-### `npm run build`
+4. This repository does not clone the key for TMDB API. You'll have to use your own key, and set the variable in a .env file. 
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+   [TMDB API Documentation](https://developers.themoviedb.org/3/getting-started/authentication)   
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+5. You'll want to install any required packages (such as Flask) using *pip install {module-name}*. Try to run `python3 app.py` and an error message should show any module(s) that need to be installed.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+   Example: `pip install flask`
 
-### `npm run eject`
+You can also view *requirements.txt* to see all the required packages.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+6. Once app.py can run with all the required packages, your terminal should show the location of the program. Open the URL on your browser.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+   Example: `Running on http://172.24.4.0:8080/`
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+7. On the browser, use this flask app to search for information about any movies via TMDB API, leave and view comments and ratings, and see a Wikipedia link to more relevant information about a movie. You will need to sign up for an account with a unique username. 
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Questions
+1. *How did implementing your project differ from your expectations during project planning?*
 
-## Learn More
+   I don't think my expectations for developing the project differed much from the actual implementation. I expected that the project would be using a database to store information about users and comments, and that I would have to implement a login system either via sessions or some other library to keep track of the current user. 
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+2. *Give a detailed description of 2+ technical issues and how you solved them (your process, what you searched, what resources you used)*
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+   **a.** One technical issue I had was trying to figure out how to implement the Flask Login library. I did not know how to use the decorators and that I had to implement certain class functions for the user. I solved this by looking at various online resources that showed how to implement the flask login library.
 
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+   **b.** Another technical issue I faced was trying to establish a relationship with the User table and the Comments table. It really came down to just not knowing the correct syntax for creating a foreign key, but after looking up documentation on it, I was able to connect the tables.
