@@ -1,5 +1,3 @@
-[View in Heroku](https://adieguez1-project-m2.herokuapp.com/)
-
 ## Technologies, Frameworks, Libraries and APIs Used
 * Visual Studio Code (VSCode)
 * Git + Github
@@ -9,9 +7,9 @@
 * Flask Login
 * SQLAlchemy
 * HTML/CSS
-* Heroku
 * TMDB API
 * Wikipedia API
+* React/Javascript
 
 ## How to Launch App Locally
 1. Make sure you have git installed on your computer:
@@ -43,19 +41,23 @@
 
 You can also view *requirements.txt* to see all the required packages.
 
-6. Once app.py can run with all the required packages, your terminal should show the location of the program. Open the URL on your browser.
+6. This project uses the **React** library. Please make sure you have React installed on your local machine.
+
+7. Once app.py can run with all the required packages, your terminal should show the location of the program. Open the URL on your browser.
 
    Example: `Running on http://172.24.4.0:8080/`
 
-7. On the browser, use this flask app to search for information about any movies via TMDB API, leave and view comments and ratings, and see a Wikipedia link to more relevant information about a movie. You will need to sign up for an account with a unique username. 
+8. On the browser, use this flask app to search for information about any movies via TMDB API, leave and view comments and ratings, edit/delete your ratings, and see a Wikipedia link to more relevant information about a movie. You will need to sign up for an account with a unique username.
 
 ## Questions
-1. *How did implementing your project differ from your expectations during project planning?*
+1. *Describe three techincal problems in detail*
 
-   I don't think my expectations for developing the project differed much from the actual implementation. I expected that the project would be using a database to store information about users and comments, and that I would have to implement a login system either via sessions or some other library to keep track of the current user. 
+   **a.** The first technical issue I encountered was how to connect my Javascript/React code with my Python Flask application. I did not realize that calling the react code was just a matter of setting up a blueprint in the Flask app to point to the location of the react code, and then calling that route in the react code. 
 
-2. *Give a detailed description of 2+ technical issues and how you solved them (your process, what you searched, what resources you used)*
+   **b.** The second technical issue I had was using the Javascript fetch function to get data from the server. I tried to use the function as if it was synchronous and it resulted in errors or unwanted results. I figured out that I had to access the data retrieved inside the fetch function since, the data would not be immediately available, and thus could not be set to a variable in a higher scope.
 
-   **a.** One technical issue I had was trying to figure out how to implement the Flask Login library. I did not know how to use the decorators and that I had to implement certain class functions for the user. I solved this by looking at various online resources that showed how to implement the flask login library.
+   **c.** The third technical issue of this project was using state variables. I had an issue where I would try to get the value of a state variable in a render, but the result would be inconsistent or null. I looked online and saw that state variables' values are not consistent throughout different renders. If I wanted a variable for this purpose, I had to use a "useRef" variable.
 
-   **b.** Another technical issue I faced was trying to establish a relationship with the User table and the Comments table. It really came down to just not knowing the correct syntax for creating a foreign key, but after looking up documentation on it, I was able to connect the tables.
+2. *Describe the hardest part and most valuable learning portion of the overall project*
+
+   The hardest part of this project was learning React without any prior knowledge about it. It took me a while to get used to how the React library worked with HTML and Javascript to create a webpage using state variables. Also loading and fetching data from the server was challenging to do using the fetch function. I did not realize that it was asynchronous, and that data had to be handled within the function. I think that the most valuable learning portion of this project was learning React because of how useful it is in creating web apps.
