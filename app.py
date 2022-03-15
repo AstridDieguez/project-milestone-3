@@ -54,6 +54,7 @@ def comment():
         elif edited:
             print("call edit func")
         return jsonify(success=result)
+        
 
 @bp.route("/react", methods=["POST", "GET"])
 def react():

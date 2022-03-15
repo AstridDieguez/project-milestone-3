@@ -28,6 +28,11 @@
   </head>
   <body>
     <script id="data" type="application/json">{{data|safe}}</script>
+    <script type="text/javascript">
+      if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href);
+      }
+    </script>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
     <!--
